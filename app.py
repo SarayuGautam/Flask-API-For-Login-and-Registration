@@ -1,13 +1,16 @@
 from flask import Flask
 from flask_cors import CORS
-from flask_mysqldb import MYSQL
+from flask_mysqldb import MySQL
 from dbConnect import MYSQL_DB, MYSQL_USER, MYSQL_PASSWORD
+from auth_blueprint import authentication
 
-app=FLASK(__name__)
+app=Flask(__name__)
 
 app.config["MYSQL_USER"] = MYSQL_USER
 app.config["MYSQL_PASSWORD"]= MYSQL_PASSWORD
 app.config["MYSQL_DB"]= MYSQL_DB
 app.config["MYSQL_CURSORCLASS"]= "DictCursor"
 
-db = MYSQL(app)
+db = MySQL(app)
+
+app.register_blueprint(authentication, url_prefix="/api/auth")
